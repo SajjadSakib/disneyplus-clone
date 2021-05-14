@@ -1,0 +1,78 @@
+.details #backgroundImg{
+    position: fixed; 
+     height: 100%;
+    width: 100%;
+    top:0;
+    bottom: 0;
+    
+
+    z-index:-1 ;
+}
+#titleImg{
+    display: flex;
+    justify-content: flex-start;
+    width:40vw;
+    height: 50vh;
+    margin:10px 0px 5px 10px
+}
+.controls{
+    max-width: 50vw;
+    margin:30px ;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 20px;
+    
+}
+.item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+    cursor: pointer;
+}
+.play{
+    padding:5px 20px;
+    
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: ivory;
+    color:black;
+    
+    
+}
+.trailer{
+    padding:5px 10px;
+    border:2px solid white;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: rgba(179, 179, 179,0.2) ;
+
+}
+.play:hover{
+    background-color:rgba(255,255,255,0.7);
+    
+}
+.trailer:hover,.group:hover,.add:hover{
+    background-color: rgba(179, 179, 179,0.4) ;
+}
+.group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left:5px;
+    border:2px solid white;
+    border-radius: 50% ;
+    width:40px;
+    background-color: rgba(179, 179, 179,0.2) ;
+}
+
+.add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left:5px;
+    border:2px solid white;
+    border-radius: 50% ;
+    width:40px;
+    background-color: rgba(179, 179, 179,0.2) ;
+}

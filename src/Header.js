@@ -1,46 +1,71 @@
-import React, { Component } from 'react';
+import React, { useCallback ,useEffect} from 'react';
 import './header.css';
 import { Avatar } from '@material-ui/core';
 import Menu from './Menu';
-import {connect} from 'react-redux';
-import {onUserChange} from './actions';
+import {useSelector,useDispatch} from 'react-redux';
+import {onUserChange,setDropdown} from './actions';
 import {auth,provider} from './Firebase';
+import { useHistory } from "react-router-dom";
+import firebase from 'firebase'
 
 
-const mapStateToProps = (state) =>({
-    user:state.user
-})
+function Header (){
+    
+    // const [dropdown,setDropdown] = useState('');
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const user = useSelector(state=>state.setUser.user);
+    const dropdown = useSelector(state=>state.getDropdown.dropdown);
+    const changeUser = useCallback(
+    (user) => dispatch(onUserChange(user)),
+    [dispatch]
+  );
+  const changeDropdown = useCallback(
+    (txt) => dispatch(setDropdown(txt)),
+    [dispatch]
+  );
+  
+    useEffect(() => {
+        auth.onAuthStateChanged( (user)=>{
+            
+            if(user){
+            changeUser(user);
+            
+            history.push('/home');
+            
+                }
+            })
 
-const mapDispatchToProps = (dispatch) =>({
-    changeUser: (user)=>dispatch(onUserChange(user))
-})
-class Header extends Component {
-    constructor(){
-        super();
-        this.state = {
-            user:''
+    }, [user])
+    
+    const handleAuth = () =>{
+        if(!user){
+        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(() => {auth.signInWithPopup(provider)
+            .then((result)=>{
+                // localStorage.setItem('authUser', JSON.stringify(result.user));
+                changeUser(result.user)})})
+            .catch((error)=>alert(error));
+        }
+        else{
+        auth.signOut()
+            .then(()=>{changeUser(null);
+                        history.push('/');
+                    })
+            .catch(err=>alert(err.message));
         }
     }
-    
-    handleAuth = () =>{
-        auth.signInWithPopup(provider)
-            .then((result)=>{
-                localStorage.setItem('authUser', JSON.stringify(result.user));
-                this.props.changeUser(result.user)})
-            .catch((error)=>alert(error));
-    }
-    componentDidMount(){
-        auth.onAuthStateChanged(async (user)=>{
-           if(user){
-            this.setState({user:this.props.user});
+    // componentDidMount(){
+    //     auth.onAuthStateChanged(async (user)=>{
+    //        if(user){
+    //         this.setState({user:this.props.user});
            
-           }
-        })
+    //        }
+    //     })
         
         
-    }
-    render() {
-        const user = this.props.user;
+    // }
+    
         return (
             <div className='Navbar'>
                 <div className='logo_item'>
@@ -50,12 +75,13 @@ class Header extends Component {
                 {user && <Menu/>}
                 <div className='button'>
                 
-                {!user?(<button onClick={this.handleAuth}>LOGIN</button>) :
-                <Avatar src= {user.photoURL}/>}
+                {!user?(<button onClick={handleAuth}>LOGIN</button>) :
+                (<><Avatar src= {user.photoURL} onClick={()=>changeDropdown(!dropdown?'signout':'')}/>
+                <span className={(dropdown === 'signout')?'active' :''}onClick={handleAuth}>SignOut</span></>)}
                 </div>
                 
             </div>
         )
-    }
+    
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Header);
+export default Header;

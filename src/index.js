@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {createStore} from 'redux';
+import {createStore,combineReducers} from 'redux';
 import {Provider} from 'react-redux';
-import {setUser} from './reducers';
+import {setUser,getDropdown,getMovies} from './reducers';
 
-const store = createStore(setUser);
+const rootReducer=combineReducers({setUser,getDropdown,getMovies})
+const store = createStore(rootReducer);
 ReactDOM.render(
   <Provider store={store}>
     <App />

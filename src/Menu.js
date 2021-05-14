@@ -7,12 +7,14 @@ import StarIcon from '@material-ui/icons/Star';
 import MovieIcon from '@material-ui/icons/Movie';
 import LiveTvIcon from '@material-ui/icons/LiveTv';
 
+
+
 function Menu() {
     return (
         <div className='menu'>
                 <div className='menu_items'>
                     <HomeIcon/>
-                    <span>HOME</span>
+                    <span ><a href='/home'>HOME</a></span>
                 </div>
                 <div className='menu_items'>
                     <SearchIcon />

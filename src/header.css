@@ -42,3 +42,35 @@ button:hover{
     border: 2px solid #040714;
     cursor: pointer;
 }
+.button{
+    position:relative;
+    
+}
+.button span{
+    z-index: 5;
+    position: absolute;
+    top:50px;
+    right:2px;
+    border:0.5px solid #f9f9f9;
+    padding:7px 20px;
+    background: #040714 ;
+    letter-spacing: 1.5px;
+    display:none;
+    
+}
+.button span:hover{
+    cursor: pointer;
+}
+.MuiAvatar-img{
+    margin: 0;
+    
+    cursor: pointer;
+}
+/* .button:hover span{
+  display: block;
+  transition-duration: 1s; 
+} */
+span.active{
+    display:block;
+}
+
