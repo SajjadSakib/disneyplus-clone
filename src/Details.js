@@ -1,12 +1,16 @@
 import React,{useState,useEffect}from 'react';
 import './details.css';
-import db from './Firebase';
-import {useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import db,{auth} from './Firebase';
+import {useParams,useHistory} from 'react-router-dom';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import GroupIcon from '@material-ui/icons/Group';
 import AddIcon from '@material-ui/icons/Add';
 
 function Details() {
+    const history = useHistory();
+    const user = useSelector(state=>state.setUser.user);
+
     const {id} =useParams();
     const [details,setdetails] = useState()
     useEffect(async() =>{
@@ -19,9 +23,25 @@ function Details() {
             }
         })
         .catch(err=>console.log(err.type))
-    },[id])
-   console.log(details) 
 
+    
+    },[id])
+
+    //persisting session 
+    useEffect(() => {
+        auth.onAuthStateChanged( async(user)=>{
+            
+            if(user){
+            
+            
+                history.push('/details/' + id)
+            
+                }
+            })
+
+    }, [user])
+//    console.log(details) ;
+  
     return (
         <>
         {details &&

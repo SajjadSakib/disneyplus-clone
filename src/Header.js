@@ -26,8 +26,8 @@ function Header (){
   );
   
     useEffect(() => {
-        auth.onAuthStateChanged( (user)=>{
-            
+        auth.onAuthStateChanged( async(user)=>{
+            console.log(localStorage.getItem('disneyPlusUser'));
             if(user){
             changeUser(user);
             
@@ -40,13 +40,12 @@ function Header (){
     
     const handleAuth = () =>{
         if(!user){
-        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => {auth.signInWithPopup(provider)
+        auth.signInWithPopup(provider)
             .then((result)=>{
-                // localStorage.setItem('authUser', JSON.stringify(result.user));
-                changeUser(result.user)})})
+                localStorage.setItem('disneyPlusUser', JSON.stringify(result.user));
+                changeUser(result.user)})
             .catch((error)=>alert(error));
-        }
+            }
         else{
         auth.signOut()
             .then(()=>{changeUser(null);
@@ -69,7 +68,7 @@ function Header (){
         return (
             <div className='Navbar'>
                 <div className='logo_item'>
-                <img src={process.env.PUBLIC_URL+'images/logo.svg'} className='logo' alt=""/>
+                <img src={'/images/logo.svg'} className='logo' alt=""/>
                 </div>
                 
                 {user && <Menu/>}
