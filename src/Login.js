@@ -1,11 +1,30 @@
-import React,{Component} from 'react';
+import React,{useEffect,useCallback} from 'react';
 import './login.css';
+import {useSelector,useDispatch} from 'react-redux';
+import {auth} from './Firebase'
+import {onUserChange} from './actions';
+import { useHistory } from "react-router-dom";
 
+function Login () {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const user = useSelector(state=>state.setUser.user);
+    const changeUser = useCallback(
+        (user) => dispatch(onUserChange(user)),
+        [dispatch]
+      );
+    useEffect(() => {
+        auth.onAuthStateChanged( async(user)=>{
+            
+            if(user){
+            changeUser(user);
+            
+            history.push('/home');
+            
+                }
+            })
 
-class Login extends Component {
-    
-    render(){
-        
+    }, [user])    
     return (
         <section>
             
@@ -24,7 +43,7 @@ class Login extends Component {
                 <img src={process.env.PUBLIC_URL+'images/cta-logo-two.png'} className='cataloge-bottom' alt=""/>
             </div>
         </section>
-    )}
+    )
 }
 
 export default Login;

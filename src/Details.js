@@ -1,15 +1,20 @@
 import React,{useState,useEffect}from 'react';
 import './details.css';
 import {useSelector} from 'react-redux';
-import db,{auth} from './Firebase';
+import db from './Firebase';
 import {useParams,useHistory} from 'react-router-dom';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import GroupIcon from '@material-ui/icons/Group';
 import AddIcon from '@material-ui/icons/Add';
 
 function Details() {
+    
     const history = useHistory();
-    const user = useSelector(state=>state.setUser.user);
+    const localUser= JSON.parse(localStorage.getItem('disneyPlusUser'));
+    if(!localUser){
+        history.push('/');
+        
+    }
 
     const {id} =useParams();
     const [details,setdetails] = useState()
@@ -17,7 +22,9 @@ function Details() {
         db.collection('movies').doc(id).get()
         .then(doc=>{
             if(doc.exists){
-                setdetails(doc.data())}
+                setdetails(doc.data())
+               
+            }
             else{
                 console.log('Nothing Found');
             }
@@ -27,21 +34,8 @@ function Details() {
     
     },[id])
 
-    //persisting session 
-    useEffect(() => {
-        auth.onAuthStateChanged( async(user)=>{
-            
-            if(user){
-            
-            
-                history.push('/details/' + id)
-            
-                }
-            })
+    
 
-    }, [user])
-//    console.log(details) ;
-  
     return (
         <>
         {details &&

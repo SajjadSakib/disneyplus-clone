@@ -9,10 +9,17 @@ import Original from './Original';
 import {useSelector,useDispatch} from 'react-redux';
 import db from './Firebase';
 import {setMovies} from './actions';
+import {useHistory} from 'react-router-dom';
 
 
 function Home(){
-    
+    const history = useHistory();
+    const user=useSelector(state=>state.setUser.user);
+    const localUser= JSON.parse(localStorage.getItem('disneyPlusUser'));
+    if(!localUser){
+        history.push('/');
+        
+    }
     const dispatch = useDispatch();
     const setMovieList = useCallback(
         (movie) => dispatch(setMovies(movie)),
@@ -27,7 +34,7 @@ function Home(){
     let original =[];
     let Disneynew= [];
     let trending =[];
-    const user=useSelector(state=>state.setUser.user);
+    
     useEffect(async() => {
         db.collection('movies').onSnapshot(
             (snapshot) =>{
@@ -52,7 +59,7 @@ function Home(){
                 setMovieList({
                     recommended, original,Disneynew,trending
                 })
-                // console.log(recommended) 
+                
 
             }
         )

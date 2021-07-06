@@ -5,6 +5,9 @@
 
     
 }
+span a{
+    margin: 0px;
+}
 .menu_items span:after {
     display:flex;
     content: '';
@@ -34,8 +37,8 @@
 .menu_items span{
     letter-spacing: 1px;
     font-size: 14 !important;
-    /* padding-left: 5px;
-    padding-right: 5px; */
+    padding-left: 2px;
+    padding-right: 5px;
 }
 .nc{
     margin-right: 10px;

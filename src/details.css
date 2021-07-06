@@ -1,7 +1,7 @@
 .details #backgroundImg{
     position: fixed; 
      height: 100%;
-    width: 100%;
+    width: 100vw;
     top:0;
     bottom: 0;
     
@@ -16,11 +16,14 @@
     margin:10px 0px 5px 10px
 }
 .controls{
-    max-width: 50vw;
+    
+    max-width: 100%;
     margin:30px ;
     display: flex;
     justify-content: flex-start;
     margin-left: 20px;
+    
+   
     
 }
 .item{
@@ -64,6 +67,7 @@
     border-radius: 50% ;
     width:40px;
     background-color: rgba(179, 179, 179,0.2) ;
+    
 }
 
 .add {
@@ -74,5 +78,19 @@
     border:2px solid white;
     border-radius: 50% ;
     width:40px;
+    
     background-color: rgba(179, 179, 179,0.2) ;
+}
+@media screen and (max-width:768px){
+    .controls{
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        grid-gap:10px;
+        gap:10px;
+        
+    }
+    .group,.add {
+        margin-left: 50%; 
+    }
+
 }

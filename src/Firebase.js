@@ -1,4 +1,5 @@
 import firebase from "firebase";
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB2btUar9Ml0z6Obc3SIjmSHR8l2-3P53c",
@@ -6,8 +7,8 @@ const firebaseConfig = {
   projectId: "disneyplus-clone-1723",
   storageBucket: "disneyplus-clone-1723.appspot.com",
   messagingSenderId: "377662093201",
-  appId: "1:377662093201:web:2f53faa4aef9034432cc30",
-  measurementId: "G-KBDKEF5HRW"
+  appId: "1:377662093201:web:64c3b191075f07a132cc30",
+  measurementId: "G-ZMJ25R8TRJ"
 };
   const firebaseApp = firebase.initializeApp(firebaseConfig);
   const db = firebaseApp.firestore();

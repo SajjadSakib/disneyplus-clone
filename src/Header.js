@@ -6,7 +6,7 @@ import {useSelector,useDispatch} from 'react-redux';
 import {onUserChange,setDropdown} from './actions';
 import {auth,provider} from './Firebase';
 import { useHistory } from "react-router-dom";
-import firebase from 'firebase'
+
 
 
 function Header (){
@@ -25,18 +25,7 @@ function Header (){
     [dispatch]
   );
   
-    useEffect(() => {
-        auth.onAuthStateChanged( async(user)=>{
-            console.log(localStorage.getItem('disneyPlusUser'));
-            if(user){
-            changeUser(user);
-            
-            history.push('/home');
-            
-                }
-            })
-
-    }, [user])
+    
     
     const handleAuth = () =>{
         if(!user){
@@ -48,22 +37,15 @@ function Header (){
             }
         else{
         auth.signOut()
-            .then(()=>{changeUser(null);
-                        history.push('/');
+            .then(()=>{
+                localStorage.setItem('disneyPlusUser', JSON.stringify(null));
+                changeUser(null);
+                history.push('/');
                     })
             .catch(err=>alert(err.message));
         }
     }
-    // componentDidMount(){
-    //     auth.onAuthStateChanged(async (user)=>{
-    //        if(user){
-    //         this.setState({user:this.props.user});
-           
-    //        }
-    //     })
-        
-        
-    // }
+    
     
         return (
             <div className='Navbar'>
